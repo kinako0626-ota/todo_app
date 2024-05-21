@@ -11,10 +11,11 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func SetupDB() (*gorm.DB ,error) {
+func SetupDB() (*gorm.DB ,error)  {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatalf("Error loading .env file", err)
+		log.Print("Error loading .env file", err)
+		return nil, err
 	}
 	root := os.Getenv("MYSQL_ROOT_USER")
 	password := os.Getenv("MYSQL_ROOT_PASSWORD")

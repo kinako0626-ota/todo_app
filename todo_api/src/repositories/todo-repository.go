@@ -1,25 +1,51 @@
 package repositories
 
-// TODO: TODOの処理を行うリポジトリを実装する
-// CreateTodo: TODOを作成する
-// GetTodos: TODO一覧を取得する
-// GetTodo: TODOを取得する
-// UpdateTodo: TODOを更新する
-// DeleteTodo: TODOを削除する
+import (
+	"github.com/kinako0626-ota/todo_api/src/models"
+	"gorm.io/gorm"
+)
 
-func CreateTodo() {
-
+type TodoRepository interface {
+	GetTodos() ([]models.Todo, error)
+	CreateTodo(todo models.Todo) (models.Todo, error)
+	UpdateTodo(id string, updateTodo models.Todo) (models.Todo, error)
+	DeleteTodo(id string) error
 }
 
-func GetTodos() {
+type todoRepository struct {
+	db *gorm.DB
 }
 
-func GetTodo() {
+func SetupTodoRepository(db *gorm.DB) TodoRepository {
+	return &todoRepository{db: db}
 }
 
-func UpdateTodo() {
-
+func (r *todoRepository) GetTodos() ([]models.Todo, error) {
+	var todos []models.Todo
+	if err := r.db.Find(&todos).Error; err != nil {
+		return nil, err
+	}
+	return todos, nil
 }
 
-func DeleteTodo() {
+func (r *todoRepository) CreateTodo(todo models.Todo) (models.Todo, error) {
+	if err := r.db.Create(&todo).Error; err != nil {
+		return models.Todo{}, err
+	}
+	return todo, nil
+}
+
+func (r *todoRepository) UpdateTodo(id string, updateTodo models.Todo) (models.Todo, error) {
+	var todo models.Todo
+	if err := r.db.Model(&todo).Where("id = ?", id).Updates(updateTodo).Error; err != nil {
+		return models.Todo{}, err
+	}
+	return todo, nil
+}
+
+func (r *todoRepository) DeleteTodo(id string) error {
+	if err := r.db.Where("id = ?", id).Delete(&models.Todo{}).Error; err != nil {
+		return err
+	}
+	return nil
 }
