@@ -9,12 +9,22 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.8
+  retrofit:
+  dio:
+  logger:
+  json_annotation:
+  freezed_annotation:
+  hooks_riverpod:
+  flutter_hooks:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  retrofit_generator:
+  build_runner:
+  json_serializable:
+  freezed:
   flutter_lints: ^2.0.0
 
 flutter:
