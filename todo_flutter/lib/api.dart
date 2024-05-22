@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:todo_flutter/app_dio.dart';
+import 'package:todo_flutter/constants.dart';
 import 'package:todo_flutter/models/todo.dart';
 
 part 'api.g.dart';
 
-@RestApi(baseUrl: 'http://localhost:8080')
+@RestApi(baseUrl: baseUrl)
 abstract class Api {
-  factory Api(Dio dio, {String baseUrl}) = _Api;
+  factory Api(AppDio dio, {String baseUrl}) = _Api;
 
   @GET('/todos')
   Future<List<Todo>> getTodos();

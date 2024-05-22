@@ -1,6 +1,8 @@
-import 'package:dio/dio.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_flutter/api.dart';
+import 'package:todo_flutter/app_dio.dart';
 import 'package:todo_flutter/models/todo.dart';
+import 'package:todo_flutter/providers.dart';
 
 abstract class ITodoRepository {
   Future<List<Todo>> getTodos();
@@ -14,18 +16,20 @@ abstract class ITodoRepository {
 }
 
 class TodoRepository implements ITodoRepository {
+  TodoRepository(this._ref);
+  final Ref _ref;
+  AppDio get appDio => _ref.read(appDioProvider);
   @override
   Future<List<Todo>> getTodos() async {
-    Dio dio = Dio();
-    Api api = Api(dio);
+    final api = Api(appDio);
     final todos = await api.getTodos();
+    print('todos: $todos');
     return todos;
   }
 
   @override
   Future<Todo> createTodo(Todo todo) async {
-    Dio dio = Dio();
-    Api api = Api(dio);
+    final api = Api(appDio);
     final createdTodo = await api.createTodo(todo);
     return createdTodo;
   }
@@ -34,8 +38,7 @@ class TodoRepository implements ITodoRepository {
   Future<Todo> updateTodo(
     Todo todo,
   ) async {
-    Dio dio = Dio();
-    Api api = Api(dio);
+    final api = Api(appDio);
     final updatedTodo = await api.updateTodo(
       todo.id,
       todo,
@@ -47,8 +50,7 @@ class TodoRepository implements ITodoRepository {
   Future<void> deleteTodo(
     int id,
   ) async {
-    Dio dio = Dio();
-    Api api = Api(dio);
+    final api = Api(appDio);
     await api.deleteTodo(id);
   }
 }

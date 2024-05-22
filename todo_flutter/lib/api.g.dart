@@ -13,7 +13,7 @@ class _Api implements Api {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://localhost:8080';
+    baseUrl ??= 'http://192.168.65.1:8080';
   }
 
   final Dio _dio;
