@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"time"
 
+	"firebase.google.com/go/auth"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/kinako0626-ota/todo_api/src/models"
@@ -14,17 +16,48 @@ import (
 )
 
 func main() {
-	db, error := utils.SetupDB()
-	if error != nil {
-		log.Printf("failed to connect database: %v", error)
+	app, err := utils.SetupFirebaseApp()
+	if err != nil {
+		log.Printf("failed to setup firebase app: %v", err)
 		http.Error(nil, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
-	db.AutoMigrate(&models.Todo{})
-	todoRepository := repositories.SetupTodoRepository(db)
-	todoService := services.SetupTodoService(todoRepository)
-	todoHandler := utils.SetupTodoHandler(todoService)
-	r := gin.Default()
+	authClient, err := app.Auth(context.Background())
+	if err != nil {
+		log.Printf("failed to setup firebase auth client: %v", err)
+		http.Error(nil, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	email := "test@gmail.com"
+	password := "-Password123"
+	displayName := "test"
+	photoURL := "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+
+	createUserParams := (&auth.UserToCreate{}).Email(email).Password(password).DisplayName(displayName).PhotoURL(photoURL).Disabled(false)
+
+	
+	user, authError:= authClient.CreateUser( context.Background(), createUserParams)
+
+	if authError != nil {
+		log.Printf("failed to create user: %v", authError)
+		return
+	}
+	log.Printf("Successfully created user: %v", user)
+	
+	
+
+		db, error := utils.SetupDB()
+		if error != nil {
+			log.Printf("failed to connect database: %v", error)
+			http.Error(nil, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+
+		db.AutoMigrate(&models.Todo{}, &models.User{})
+		todoRepository := repositories.SetupTodoRepository(db)
+		todoService := services.SetupTodoService(todoRepository)
+		todoHandler := utils.SetupTodoHandler(todoService)
+		r := gin.Default()
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:[]string{"*"}, 
         AllowMethods:[]string{"GET", "POST", "PUT", "DELETE"},
