@@ -5,14 +5,8 @@ services:
       target: dev
     stdin_open: true
     tty: true
-    security_opt:
-      - seccomp:unconfined
-    cap_add:
-      - SYS_PTRACE
     ports:
-      - 8080:8080 # アプリケーションポート
-      - 40000:40000 # デバッガーポート
-    command: dlv debug --listen=:40000 --headless=true --api-version=2 --accept-multiclient --continue
+      - 8080:8080
     env_file: .env
     depends_on:
       db:
