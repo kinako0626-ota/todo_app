@@ -2,7 +2,7 @@ services:
   server:
     build:
       context: .
-      target: final
+      target: dev
     stdin_open: true
     tty: true
     ports:
@@ -13,6 +13,8 @@ services:
         condition: service_healthy
     volumes:
       - .:/app
+      - /app/tmp # tmpディレクトリをマウントから除外
+      - /tmp # システムのtmpディレクトリをマウントから除外
 
   db:
     image: mysql
@@ -25,7 +27,7 @@ services:
       TZ: Asia/Tokyo
     volumes:
       - db-data:/var/lib/mysql
-    expose:
+    ports:
       - 13306:3306
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
