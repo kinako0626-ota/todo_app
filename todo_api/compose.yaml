@@ -5,6 +5,10 @@ services:
       target: dev
     stdin_open: true
     tty: true
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - SYS_PTRACE
     ports:
       - 8080:8080 # アプリケーションポート
       - 40000:40000 # デバッガーポート
