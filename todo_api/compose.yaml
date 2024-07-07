@@ -13,6 +13,8 @@ services:
         condition: service_healthy
     volumes:
       - .:/app
+      - /app/tmp # tmpディレクトリをマウントから除外
+      - /tmp # システムのtmpディレクトリをマウントから除外
 
   db:
     image: mysql

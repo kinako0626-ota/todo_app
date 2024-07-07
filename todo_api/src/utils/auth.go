@@ -9,15 +9,14 @@ import (
 )
 
 func InitializeFirebaseAuthClient(app *firebase.App) (*auth.Client, error) {
-    authClient, err := app.Auth(context.Background())
-    if err != nil {
-        log.Printf("failed to initialize Firebase Auth client: %v", err)
-        return nil, err
-    }
-    return authClient, nil
-	
-}
+	authClient, err := app.Auth(context.Background())
+	if err != nil {
+		log.Printf("failed to initialize Firebase Auth client: %v", err)
+		return nil, err
+	}
+	return authClient, nil
 
+}
 
 func VerifyIDToken(authClient *auth.Client, idToken string) (*auth.Token, error) {
 	token, err := authClient.VerifyIDToken(context.Background(), idToken)
