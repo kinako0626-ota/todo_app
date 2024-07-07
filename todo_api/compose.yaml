@@ -2,11 +2,13 @@ services:
   server:
     build:
       context: .
-      target: final
+      target: dev
     stdin_open: true
     tty: true
     ports:
-      - 8080:8080
+      - 8080:8080 # アプリケーションポート
+      - 40000:40000 # デバッガーポート
+    command: dlv debug --listen=:40000 --headless=true --api-version=2 --accept-multiclient --continue
     env_file: .env
     depends_on:
       db:
@@ -25,7 +27,7 @@ services:
       TZ: Asia/Tokyo
     volumes:
       - db-data:/var/lib/mysql
-    expose:
+    ports:
       - 13306:3306
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
