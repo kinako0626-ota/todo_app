@@ -53,7 +53,7 @@ func main() {
 	{
 		r.GET("/", todoHandler.GetTodos)
 		todoRouter.POST("/", todoHandler.CreateTodo)
-		todoRouter.PUT("/:id", todoHandler.UpdateTodo)
+		r.PUT("/:id", todoHandler.UpdateTodo)
 		todoRouter.DELETE("/:id", todoHandler.DeleteTodo)
 	}
 	r.Run()

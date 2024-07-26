@@ -69,11 +69,7 @@ func (h *TodoHandler) UpdateTodo(ctx *gin.Context) {
 		})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"status_code": http.StatusOK,
-		"message":     "update todo",
-		"todo":        updatedTodo,
-	})
+	ctx.JSON(http.StatusOK, updatedTodo)
 }
 
 func (h *TodoHandler) DeleteTodo(ctx *gin.Context) {

@@ -18,7 +18,7 @@ abstract class Api {
     @Body() Todo todo,
   );
 
-  @PUT('/todos/{id}')
+  @PUT('/{id}')
   Future<Todo> updateTodo(
     @Path('id') int id,
     @Body() Todo todo,

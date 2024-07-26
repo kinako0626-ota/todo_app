@@ -28,4 +28,26 @@ class TodoListPageNotifier extends StateNotifier<TodoListPageState> {
       todos: todos,
     );
   }
+
+  Future<void> updateTodo({
+    required Todo todo,
+  }) async {
+    final previusTodos = state.todos.asData?.value ?? [];
+    final updatedTodo = await AsyncValue.guard<Todo>(
+      () async => await _todoRepository.updateTodo(
+        todo,
+      ),
+    );
+    final generatedTodos = previusTodos.map(
+      (e) {
+        if (e.id == updatedTodo.asData?.value.id) {
+          return updatedTodo.asData?.value ?? e;
+        }
+        return e;
+      },
+    ).toList();
+    state = state.copyWith(
+      todos: AsyncValue.data(generatedTodos),
+    );
+  }
 }

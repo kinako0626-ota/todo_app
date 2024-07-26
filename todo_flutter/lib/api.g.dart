@@ -93,7 +93,7 @@ class _Api implements Api {
     )
             .compose(
               _dio.options,
-              '/todos/${id}',
+              '/${id}',
               queryParameters: queryParameters,
               data: _data,
             )

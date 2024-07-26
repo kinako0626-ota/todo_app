@@ -45,8 +45,12 @@ class TodoListPage extends HookConsumerWidget {
                   ),
                   leading: Checkbox(
                     value: todo.done,
-                    onChanged: (value) {
-                      if (value != null) {}
+                    onChanged: (value) async {
+                      if (value != null) {
+                        await ref
+                            .read(todoListPageNotifierProvider.notifier)
+                            .updateTodo(todo: todo.copyWith(done: value));
+                      }
                     },
                   ),
                   trailing: IconButton(
