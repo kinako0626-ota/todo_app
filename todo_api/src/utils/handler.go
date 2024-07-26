@@ -45,11 +45,7 @@ func (h *TodoHandler) CreateTodo(ctx *gin.Context) {
 		})
 		return
 	}
-	ctx.JSON(http.StatusCreated, gin.H{
-		"status_code": http.StatusCreated,
-		"message":     "add todo",
-		"todo":        createdTodo,
-	})
+	ctx.JSON(http.StatusCreated, createdTodo)
 }
 
 func (h *TodoHandler) UpdateTodo(ctx *gin.Context) {

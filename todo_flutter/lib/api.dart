@@ -13,7 +13,7 @@ abstract class Api {
   @GET('/')
   Future<List<Todo>> getTodos();
 
-  @POST('/todos')
+  @POST('/')
   Future<Todo> createTodo(
     @Body() Todo todo,
   );
@@ -24,7 +24,7 @@ abstract class Api {
     @Body() Todo todo,
   );
 
-  @DELETE('/todos/{id}')
+  @DELETE('/{id}')
   Future<void> deleteTodo(
     @Path('id') int id,
   );

@@ -7,12 +7,13 @@ part of 'todo.dart';
 // **************************************************************************
 
 _$TodoImpl _$$TodoImplFromJson(Map<String, dynamic> json) => _$TodoImpl(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt() ?? 0,
       title: json['title'] as String? ?? '',
       description: json['description'] as String? ?? '',
       done: json['done'] as bool? ?? false,
       userId: (json['userId'] as num).toInt(),
       createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$$TodoImplToJson(_$TodoImpl instance) =>
@@ -23,4 +24,5 @@ Map<String, dynamic> _$$TodoImplToJson(_$TodoImpl instance) =>
       'done': instance.done,
       'userId': instance.userId,
       'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt.toIso8601String(),
     };

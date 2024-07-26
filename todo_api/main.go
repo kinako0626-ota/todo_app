@@ -51,10 +51,11 @@ func main() {
 	todoRouter := r.Group("/todos")
 	todoRouter.Use(utils.AuthMiddleware(authClient))
 	{
+		//TODO(ota): アプリ側で認証の準備ができたらrをtodoHandlerに差し替え
 		r.GET("/", todoHandler.GetTodos)
-		todoRouter.POST("/", todoHandler.CreateTodo)
+		r.POST("/", todoHandler.CreateTodo)
 		r.PUT("/:id", todoHandler.UpdateTodo)
-		todoRouter.DELETE("/:id", todoHandler.DeleteTodo)
+		r.DELETE("/:id", todoHandler.DeleteTodo)
 	}
 	r.Run()
 }

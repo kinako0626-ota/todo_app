@@ -50,4 +50,46 @@ class TodoListPageNotifier extends StateNotifier<TodoListPageState> {
       todos: AsyncValue.data(generatedTodos),
     );
   }
+
+  Future<void> createTodo({
+    required Todo todo,
+  }) async {
+    final previusTodos = state.todos.asData?.value ?? [];
+    state = state.copyWith(
+      todos: const AsyncLoading(),
+    );
+    final createdTodo = await AsyncValue.guard<Todo>(
+      () async => await _todoRepository.createTodo(
+        todo,
+      ),
+    );
+    createdTodo.whenData((value) {
+      final generatedTodos = [...previusTodos, value];
+      state = state.copyWith(
+        todos: AsyncValue.data(generatedTodos),
+      );
+    });
+  }
+
+  Future<void> deleteTodo({
+    required int id,
+  }) async {
+    final previusTodos = state.todos.asData?.value ?? [];
+    state = state.copyWith(
+      todos: const AsyncLoading(),
+    );
+    await AsyncValue.guard<void>(
+      () async => await _todoRepository.deleteTodo(
+        id,
+      ),
+    );
+    final generatedTodos = previusTodos
+        .where(
+          (e) => e.id != id,
+        )
+        .toList();
+    state = state.copyWith(
+      todos: AsyncValue.data(generatedTodos),
+    );
+  }
 }
