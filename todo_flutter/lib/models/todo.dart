@@ -10,6 +10,7 @@ class Todo with _$Todo {
     @Default('') String title,
     @Default('') String description,
     @Default(false) bool done,
+    required int userId,
     required DateTime createdAt,
   }) = _Todo;
 

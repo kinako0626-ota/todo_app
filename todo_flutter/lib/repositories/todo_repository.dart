@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:simple_logger/simple_logger.dart';
 import 'package:todo_flutter/api.dart';
 import 'package:todo_flutter/app_dio.dart';
 import 'package:todo_flutter/models/todo.dart';
@@ -21,10 +23,26 @@ class TodoRepository implements ITodoRepository {
   AppDio get appDio => _ref.read(appDioProvider);
   @override
   Future<List<Todo>> getTodos() async {
-    final api = Api(appDio);
-    final todos = await api.getTodos();
-    print('todos: $todos');
-    return todos;
+    try {
+      final api = Api(appDio);
+      final todos = await api.getTodos();
+      SimpleLogger().info('todos: $todos');
+      return todos;
+    } on DioException catch (e) {
+      final response = e.response;
+      SimpleLogger().shout(
+        'statusCode: ${response?.statusCode}, '
+        'message: ${response?.statusMessage}'
+        'data: ${response?.data}',
+      );
+      rethrow;
+    } catch (e, stack) {
+      SimpleLogger().shout({
+        'message': e.toString(),
+        'stack': stack.toString(),
+      });
+      rethrow;
+    }
   }
 
   @override

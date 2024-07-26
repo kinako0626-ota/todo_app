@@ -28,36 +28,33 @@ func main() {
 		return
 	}
 
-	
-	
+	db, error := utils.SetupDB()
+	if error != nil {
+		log.Printf("failed to connect database: %v", error)
+		http.Error(nil, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 
-		db, error := utils.SetupDB()
-		if error != nil {
-			log.Printf("failed to connect database: %v", error)
-			http.Error(nil, "Internal Server Error", http.StatusInternalServerError)
-			return
-		}
-
-		db.AutoMigrate(&models.Todo{}, &models.User{})
-		todoRepository := repositories.SetupTodoRepository(db)
-		todoService := services.SetupTodoService(todoRepository)
-		todoHandler := utils.SetupTodoHandler(todoService)
-		r := gin.Default()
+	db.AutoMigrate(&models.Todo{}, &models.User{})
+	todoRepository := repositories.SetupTodoRepository(db)
+	todoService := services.SetupTodoService(todoRepository)
+	todoHandler := utils.SetupTodoHandler(todoService)
+	r := gin.Default()
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:[]string{"*"}, 
-        AllowMethods:[]string{"GET", "POST", "PUT", "DELETE"},
-        AllowHeaders:[]string{"Origin", "Content-Type"},
-        ExposeHeaders:[]string{"Content-Length"},
-        AllowCredentials: true,
-        MaxAge:12 * time.Hour,
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:     []string{"Origin", "Content-Type"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
 	}))
 	todoRouter := r.Group("/todos")
 	todoRouter.Use(utils.AuthMiddleware(authClient))
 	{
-	r.GET("/", todoHandler.GetTodos)
-	r.POST("/", todoHandler.CreateTodo)
-	r.PUT("/:id", todoHandler.UpdateTodo)
-	r.DELETE("/:id", todoHandler.DeleteTodo)
+		r.GET("/", todoHandler.GetTodos)
+		todoRouter.POST("/", todoHandler.CreateTodo)
+		todoRouter.PUT("/:id", todoHandler.UpdateTodo)
+		todoRouter.DELETE("/:id", todoHandler.DeleteTodo)
 	}
 	r.Run()
 }

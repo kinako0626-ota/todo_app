@@ -10,7 +10,7 @@ part 'api.g.dart';
 abstract class Api {
   factory Api(AppDio dio, {String baseUrl}) = _Api;
 
-  @GET('/todos')
+  @GET('/')
   Future<List<Todo>> getTodos();
 
   @POST('/todos')

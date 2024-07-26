@@ -24,10 +24,9 @@ func (h *TodoHandler) GetTodos(ctx *gin.Context) {
 		})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"status_code": http.StatusOK,
-		"todos": todos,
-	})
+	ctx.JSON(http.StatusOK,
+		todos,
+	)
 }
 
 func (h *TodoHandler) CreateTodo(ctx *gin.Context) {
@@ -48,8 +47,8 @@ func (h *TodoHandler) CreateTodo(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusCreated, gin.H{
 		"status_code": http.StatusCreated,
-		"message":"add todo",
-		"todo":createdTodo,
+		"message":     "add todo",
+		"todo":        createdTodo,
 	})
 }
 
@@ -66,14 +65,14 @@ func (h *TodoHandler) UpdateTodo(ctx *gin.Context) {
 	updatedTodo, err := h.todoService.UpdateTodo(id, updateTodo)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error":err.Error(),
+			"error": err.Error(),
 		})
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
 		"status_code": http.StatusOK,
-		"message":"update todo",
-		"todo":updatedTodo,
+		"message":     "update todo",
+		"todo":        updatedTodo,
 	})
 }
 
@@ -82,12 +81,12 @@ func (h *TodoHandler) DeleteTodo(ctx *gin.Context) {
 	err := h.todoService.DeleteTodo(id)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error":err.Error(),
+			"error": err.Error(),
 		})
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
 		"status_code": http.StatusOK,
-		"message":"delete todo",
+		"message":     "delete todo",
 	})
 }

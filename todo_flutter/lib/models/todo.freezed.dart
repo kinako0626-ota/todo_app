@@ -24,6 +24,7 @@ mixin _$Todo {
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   bool get done => throw _privateConstructorUsedError;
+  int get userId => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,6 +42,7 @@ abstract class $TodoCopyWith<$Res> {
       String title,
       String description,
       bool done,
+      int userId,
       DateTime createdAt});
 }
 
@@ -61,6 +63,7 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
     Object? title = null,
     Object? description = null,
     Object? done = null,
+    Object? userId = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
@@ -80,6 +83,10 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
           ? _value.done
           : done // ignore: cast_nullable_to_non_nullable
               as bool,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -100,6 +107,7 @@ abstract class _$$TodoImplCopyWith<$Res> implements $TodoCopyWith<$Res> {
       String title,
       String description,
       bool done,
+      int userId,
       DateTime createdAt});
 }
 
@@ -117,6 +125,7 @@ class __$$TodoImplCopyWithImpl<$Res>
     Object? title = null,
     Object? description = null,
     Object? done = null,
+    Object? userId = null,
     Object? createdAt = null,
   }) {
     return _then(_$TodoImpl(
@@ -136,6 +145,10 @@ class __$$TodoImplCopyWithImpl<$Res>
           ? _value.done
           : done // ignore: cast_nullable_to_non_nullable
               as bool,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -152,6 +165,7 @@ class _$TodoImpl implements _Todo {
       this.title = '',
       this.description = '',
       this.done = false,
+      required this.userId,
       required this.createdAt});
 
   factory _$TodoImpl.fromJson(Map<String, dynamic> json) =>
@@ -169,11 +183,13 @@ class _$TodoImpl implements _Todo {
   @JsonKey()
   final bool done;
   @override
+  final int userId;
+  @override
   final DateTime createdAt;
 
   @override
   String toString() {
-    return 'Todo(id: $id, title: $title, description: $description, done: $done, createdAt: $createdAt)';
+    return 'Todo(id: $id, title: $title, description: $description, done: $done, userId: $userId, createdAt: $createdAt)';
   }
 
   @override
@@ -186,6 +202,7 @@ class _$TodoImpl implements _Todo {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.done, done) || other.done == done) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
@@ -193,7 +210,7 @@ class _$TodoImpl implements _Todo {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, title, description, done, createdAt);
+      Object.hash(runtimeType, id, title, description, done, userId, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -215,6 +232,7 @@ abstract class _Todo implements Todo {
       final String title,
       final String description,
       final bool done,
+      required final int userId,
       required final DateTime createdAt}) = _$TodoImpl;
 
   factory _Todo.fromJson(Map<String, dynamic> json) = _$TodoImpl.fromJson;
@@ -227,6 +245,8 @@ abstract class _Todo implements Todo {
   String get description;
   @override
   bool get done;
+  @override
+  int get userId;
   @override
   DateTime get createdAt;
   @override

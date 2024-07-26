@@ -35,9 +35,24 @@ class TodoListPage extends HookConsumerWidget {
             itemBuilder: (context, index) {
               final todo = todos[index];
               return ListTile(
-                title: Text(todo.title),
-                subtitle: Text(todo.description),
-              );
+                  title: Text(todo.title),
+                  subtitle: Row(
+                    children: [
+                      Text(todo.description),
+                      const Spacer(),
+                      Text(todo.createdAt.toString()),
+                    ],
+                  ),
+                  leading: Checkbox(
+                    value: todo.done,
+                    onChanged: (value) {
+                      if (value != null) {}
+                    },
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () {},
+                  ));
             },
           );
         },
