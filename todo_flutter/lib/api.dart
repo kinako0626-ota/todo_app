@@ -10,21 +10,21 @@ part 'api.g.dart';
 abstract class Api {
   factory Api(AppDio dio, {String baseUrl}) = _Api;
 
-  @GET('/todos')
+  @GET('/')
   Future<List<Todo>> getTodos();
 
-  @POST('/todos')
+  @POST('/')
   Future<Todo> createTodo(
     @Body() Todo todo,
   );
 
-  @PUT('/todos/{id}')
+  @PUT('/{id}')
   Future<Todo> updateTodo(
     @Path('id') int id,
     @Body() Todo todo,
   );
 
-  @DELETE('/todos/{id}')
+  @DELETE('/{id}')
   Future<void> deleteTodo(
     @Path('id') int id,
   );

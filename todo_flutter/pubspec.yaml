@@ -12,7 +12,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   retrofit:
   dio:
-  logger:
+  simple_logger:
   json_annotation:
   freezed_annotation:
   hooks_riverpod:

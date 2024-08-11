@@ -13,7 +13,7 @@ class _Api implements Api {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://192.168.65.1:8080';
+    baseUrl ??= 'http://localhost:8080';
   }
 
   final Dio _dio;
@@ -34,7 +34,7 @@ class _Api implements Api {
     )
             .compose(
               _dio.options,
-              '/todos',
+              '/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -63,7 +63,7 @@ class _Api implements Api {
     )
             .compose(
               _dio.options,
-              '/todos',
+              '/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -93,7 +93,7 @@ class _Api implements Api {
     )
             .compose(
               _dio.options,
-              '/todos/${id}',
+              '/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -119,7 +119,7 @@ class _Api implements Api {
     )
         .compose(
           _dio.options,
-          '/todos/${id}',
+          '/${id}',
           queryParameters: queryParameters,
           data: _data,
         )

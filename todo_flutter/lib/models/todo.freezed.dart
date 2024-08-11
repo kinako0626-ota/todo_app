@@ -24,7 +24,9 @@ mixin _$Todo {
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   bool get done => throw _privateConstructorUsedError;
+  int get userId => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +43,9 @@ abstract class $TodoCopyWith<$Res> {
       String title,
       String description,
       bool done,
-      DateTime createdAt});
+      int userId,
+      DateTime createdAt,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -61,7 +65,9 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
     Object? title = null,
     Object? description = null,
     Object? done = null,
+    Object? userId = null,
     Object? createdAt = null,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -80,9 +86,17 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
           ? _value.done
           : done // ignore: cast_nullable_to_non_nullable
               as bool,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ) as $Val);
   }
@@ -100,7 +114,9 @@ abstract class _$$TodoImplCopyWith<$Res> implements $TodoCopyWith<$Res> {
       String title,
       String description,
       bool done,
-      DateTime createdAt});
+      int userId,
+      DateTime createdAt,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -117,7 +133,9 @@ class __$$TodoImplCopyWithImpl<$Res>
     Object? title = null,
     Object? description = null,
     Object? done = null,
+    Object? userId = null,
     Object? createdAt = null,
+    Object? updatedAt = null,
   }) {
     return _then(_$TodoImpl(
       id: null == id
@@ -136,9 +154,17 @@ class __$$TodoImplCopyWithImpl<$Res>
           ? _value.done
           : done // ignore: cast_nullable_to_non_nullable
               as bool,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
   }
@@ -148,16 +174,19 @@ class __$$TodoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TodoImpl implements _Todo {
   const _$TodoImpl(
-      {required this.id,
+      {this.id = 0,
       this.title = '',
       this.description = '',
       this.done = false,
-      required this.createdAt});
+      required this.userId,
+      required this.createdAt,
+      required this.updatedAt});
 
   factory _$TodoImpl.fromJson(Map<String, dynamic> json) =>
       _$$TodoImplFromJson(json);
 
   @override
+  @JsonKey()
   final int id;
   @override
   @JsonKey()
@@ -169,11 +198,15 @@ class _$TodoImpl implements _Todo {
   @JsonKey()
   final bool done;
   @override
+  final int userId;
+  @override
   final DateTime createdAt;
+  @override
+  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'Todo(id: $id, title: $title, description: $description, done: $done, createdAt: $createdAt)';
+    return 'Todo(id: $id, title: $title, description: $description, done: $done, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -186,14 +219,17 @@ class _$TodoImpl implements _Todo {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.done, done) || other.done == done) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, description, done, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, description, done, userId, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -211,11 +247,13 @@ class _$TodoImpl implements _Todo {
 
 abstract class _Todo implements Todo {
   const factory _Todo(
-      {required final int id,
+      {final int id,
       final String title,
       final String description,
       final bool done,
-      required final DateTime createdAt}) = _$TodoImpl;
+      required final int userId,
+      required final DateTime createdAt,
+      required final DateTime updatedAt}) = _$TodoImpl;
 
   factory _Todo.fromJson(Map<String, dynamic> json) = _$TodoImpl.fromJson;
 
@@ -228,7 +266,11 @@ abstract class _Todo implements Todo {
   @override
   bool get done;
   @override
+  int get userId;
+  @override
   DateTime get createdAt;
+  @override
+  DateTime get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$TodoImplCopyWith<_$TodoImpl> get copyWith =>

@@ -28,4 +28,68 @@ class TodoListPageNotifier extends StateNotifier<TodoListPageState> {
       todos: todos,
     );
   }
+
+  Future<void> updateTodo({
+    required Todo todo,
+  }) async {
+    final previusTodos = state.todos.asData?.value ?? [];
+    final updatedTodo = await AsyncValue.guard<Todo>(
+      () async => await _todoRepository.updateTodo(
+        todo,
+      ),
+    );
+    final generatedTodos = previusTodos.map(
+      (e) {
+        if (e.id == updatedTodo.asData?.value.id) {
+          return updatedTodo.asData?.value ?? e;
+        }
+        return e;
+      },
+    ).toList();
+    state = state.copyWith(
+      todos: AsyncValue.data(generatedTodos),
+    );
+  }
+
+  Future<void> createTodo({
+    required Todo todo,
+  }) async {
+    final previusTodos = state.todos.asData?.value ?? [];
+    state = state.copyWith(
+      todos: const AsyncLoading(),
+    );
+    final createdTodo = await AsyncValue.guard<Todo>(
+      () async => await _todoRepository.createTodo(
+        todo,
+      ),
+    );
+    createdTodo.whenData((value) {
+      final generatedTodos = [...previusTodos, value];
+      state = state.copyWith(
+        todos: AsyncValue.data(generatedTodos),
+      );
+    });
+  }
+
+  Future<void> deleteTodo({
+    required int id,
+  }) async {
+    final previusTodos = state.todos.asData?.value ?? [];
+    state = state.copyWith(
+      todos: const AsyncLoading(),
+    );
+    await AsyncValue.guard<void>(
+      () async => await _todoRepository.deleteTodo(
+        id,
+      ),
+    );
+    final generatedTodos = previusTodos
+        .where(
+          (e) => e.id != id,
+        )
+        .toList();
+    state = state.copyWith(
+      todos: AsyncValue.data(generatedTodos),
+    );
+  }
 }
