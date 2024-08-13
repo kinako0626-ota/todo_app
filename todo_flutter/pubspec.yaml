@@ -17,9 +17,6 @@ dependencies:
   freezed_annotation: ^2.4.4
   hooks_riverpod: ^2.5.1
   flutter_hooks: ^0.20.5
-  widgetbook: ^3.8.1
-  widgetbook_annotation: ^3.1.0
-  device_preview: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -29,7 +26,6 @@ dev_dependencies:
   json_serializable: ^6.8.0
   freezed: ^2.5.2
   flutter_lints: ^4.0.0
-  widgetbook_generator: ^3.8.0
 
 flutter:
   uses-material-design: true
