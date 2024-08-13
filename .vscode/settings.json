@@ -60,6 +60,7 @@
     "**/*.freezed.dart": true,
     "**/*.g.dart": true
   },
-  "cSpell.words": ["licence"],
-  "circleci.persistedProjectSelection": []
+  "cSpell.words": ["licence", "widgetbook"],
+  "circleci.persistedProjectSelection": [],
+  "cmake.ignoreCMakeListsMissing": true
 }

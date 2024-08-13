@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_flutter/view/todo_list_page.dart';
+import 'package:todo_flutter/views/todo_list_page.dart';
 
 void main() {
   runApp(
