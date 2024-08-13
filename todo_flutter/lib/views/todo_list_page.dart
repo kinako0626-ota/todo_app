@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_flutter/models/todo.dart';
 import 'package:todo_flutter/views/components/error_detail_widget.dart';
-import 'package:todo_flutter/views/components/todo_card.dart';
+import 'package:todo_flutter/views/components/todo_list_tile.dart';
 import 'package:todo_flutter/views/todo_list_page_notifier.dart';
 
 class TodoListPage extends HookConsumerWidget {
@@ -39,17 +39,17 @@ class TodoListPage extends HookConsumerWidget {
               itemCount: todos.length,
               itemBuilder: (context, index) {
                 final todo = todos[index];
-                return TodoCard(
+                return TodoListTile(
                   title: todo.title,
                   description: todo.description,
                   isDone: todo.done,
                   onTap: () {
                     // 詳細画面に遷移
                   },
-                  onCheckboxChanged: (bool value) async {
+                  onCheckboxChanged: (bool? value) async {
                     await ref
                         .read(todoListPageNotifierProvider.notifier)
-                        .updateTodo(todo: todo.copyWith(done: value));
+                        .updateTodo(todo: todo.copyWith(done: value ?? false));
                   },
                   deleteAction: () async {
                     await ref

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TodoCard extends StatelessWidget {
-  const TodoCard({
+class TodoListTile extends StatelessWidget {
+  const TodoListTile({
     required this.title,
     required this.description,
     required this.isDone,
@@ -14,22 +14,31 @@ class TodoCard extends StatelessWidget {
   final String title;
   final String description;
   final bool isDone;
-  final ValueChanged<bool> onCheckboxChanged;
+  final ValueChanged<bool?>? onCheckboxChanged;
   final VoidCallback onTap;
   final VoidCallback deleteAction;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(title),
-      subtitle: Text(description),
+      title: Text(
+        title,
+        style: isDone
+            ? const TextStyle(
+                decoration: TextDecoration.lineThrough,
+              )
+            : null,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+      subtitle: Text(
+        description,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
       leading: Checkbox.adaptive(
         value: isDone,
-        onChanged: (c) {
-          if (c != null) {
-            onCheckboxChanged(c);
-          }
-        },
+        onChanged: onCheckboxChanged,
       ),
       onTap: onTap,
       trailing: IconButton(
