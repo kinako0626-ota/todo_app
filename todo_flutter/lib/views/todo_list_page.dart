@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_flutter/models/todo.dart';
-import 'package:todo_flutter/view/todo_list_page_notifier.dart';
+import 'package:todo_flutter/views/components/error_detail_widget.dart';
+import 'package:todo_flutter/views/components/todo_list_tile.dart';
+import 'package:todo_flutter/views/todo_list_page_notifier.dart';
 
 class TodoListPage extends HookConsumerWidget {
   const TodoListPage({super.key});
@@ -37,53 +39,42 @@ class TodoListPage extends HookConsumerWidget {
               itemCount: todos.length,
               itemBuilder: (context, index) {
                 final todo = todos[index];
-                return ListTile(
-                    title: Text(todo.title),
-                    subtitle: Text(todo.description),
-                    leading: Checkbox(
-                      value: todo.done,
-                      onChanged: (value) async {
-                        if (value != null) {
-                          await ref
-                              .read(todoListPageNotifierProvider.notifier)
-                              .updateTodo(todo: todo.copyWith(done: value));
-                        }
-                      },
-                    ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () async {
-                        await ref
-                            .read(todoListPageNotifierProvider.notifier)
-                            .deleteTodo(
-                              id: todo.id,
-                            );
-                      },
-                    ));
+                return TodoListTile(
+                  title: todo.title,
+                  description: todo.description,
+                  isDone: todo.done,
+                  onTap: () {
+                    // 詳細画面に遷移
+                  },
+                  onCheckboxChanged: (bool? value) async {
+                    await ref
+                        .read(todoListPageNotifierProvider.notifier)
+                        .updateTodo(todo: todo.copyWith(done: value ?? false));
+                  },
+                  deleteAction: () async {
+                    await ref
+                        .read(todoListPageNotifierProvider.notifier)
+                        .deleteTodo(
+                          id: todo.id,
+                        );
+                  },
+                );
               },
             );
           },
-          error: (error, stackTrace) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Error: $error'),
-                  ElevatedButton(
-                    onPressed: () async => await notifier.getTodos(),
-                    child: const Text('Retry'),
-                  ),
-                ],
-              ),
-            );
-          },
+          error: (error, stackTrace) => ErrorDetailWidget(
+            error: error,
+            onRetry: () async {
+              await notifier.getTodos();
+            },
+          ),
           loading: () => const Center(
             child: CircularProgressIndicator(),
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
           onPressed: () async {
-            // Dialog
             await showDialog(
               context: context,
               builder: (context) {

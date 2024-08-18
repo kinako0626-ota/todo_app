@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_flutter/models/todo.dart';
 import 'package:todo_flutter/providers.dart';
 import 'package:todo_flutter/repositories/todo_repository.dart';
-import 'package:todo_flutter/view/todo_list_page_state.dart';
+import 'package:todo_flutter/views/todo_list_page_state.dart';
 
 final todoListPageNotifierProvider =
     StateNotifierProvider<TodoListPageNotifier, TodoListPageState>(

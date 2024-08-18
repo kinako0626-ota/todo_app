@@ -10,22 +10,22 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  retrofit:
-  dio:
-  simple_logger:
-  json_annotation:
-  freezed_annotation:
-  hooks_riverpod:
-  flutter_hooks:
+  retrofit: ^4.2.0
+  dio: ^5.5.0
+  simple_logger: ^1.9.0
+  json_annotation: ^4.9.0
+  freezed_annotation: ^2.4.4
+  hooks_riverpod: ^2.5.1
+  flutter_hooks: ^0.20.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  retrofit_generator:
-  build_runner:
-  json_serializable:
-  freezed:
-  flutter_lints: ^2.0.0
+  retrofit_generator: ^8.2.0
+  build_runner: ^2.4.9
+  json_serializable: ^6.8.0
+  freezed: ^2.5.2
+  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
