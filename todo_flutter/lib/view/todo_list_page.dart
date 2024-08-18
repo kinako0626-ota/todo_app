@@ -24,7 +24,7 @@ class TodoListPage extends HookConsumerWidget {
     final descriptionController = useTextEditingController();
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Todo List'),
+          title: const Text('Todo List Page'),
         ),
         body: state.todos.when(
           data: (todos) {
