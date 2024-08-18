@@ -37,7 +37,7 @@ jobs:
 
       - name: Read Flutter SDK version
         id: flutter_sdk_version
-        run: echo "FLUTTER_SDK_VERSION=$(jq -r '.flutterSdkVersion' .fvm/fvm_config.json)" >> $GITHUB_OUTPUT
+        run: echo "FLUTTER_SDK_VERSION=$(jq -r '.flutterSdkVersion' todo_flutter/.fvm/fvm_config.json)" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Setup Flutter
@@ -47,7 +47,7 @@ jobs:
           flutter-version: ${{ steps.flutter_sdk_version.outputs.version }}
 
       - name: Build Web app
-        run: flutter build web
+        run: cd todo_flutter/widgetbook && flutter build web
 
       - name: Publish to Cloudflare Pages
         id: deploy
