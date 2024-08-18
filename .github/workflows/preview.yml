@@ -55,7 +55,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy build/web --project-name=flutter-preview-ci
+          command: pages deploy todo_flutter/widgetbook/build/web --project-name=flutter-todo-app-widgetbook
 
       - name: Add publish URL as commit status
         if: github.event_name == 'push'
